@@ -1,4 +1,4 @@
-local base = "https://raw.githubusercontent.com/BxzScripts/BXScriptHUB/main/"
+local base = "https://raw.githubusercontent.com/BxzScripts/BXScriptHUB/main/BxScript/"
 
 local function loadModule(path)
 	local code = game:HttpGet(base .. path)
