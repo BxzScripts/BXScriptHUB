@@ -1,4 +1,4 @@
-local base = "https://raw.githubusercontent.com/BxzScripts/BXScriptHUB/main/BxScript/main.lua"
+local base = "https://raw.githubusercontent.com/BxzScripts/BXScriptHUB/main/BxScript/"
 
 local function loadModule(path)
 	local success, code = pcall(function()
