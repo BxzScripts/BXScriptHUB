@@ -1,12 +1,42 @@
 local base = "https://raw.githubusercontent.com/BxzScripts/BXScriptHUB/main/BxScript/"
 
 local function loadModule(path)
-	local code = game:HttpGet(base .. path)
-	return loadstring(code)()
+	local success, code = pcall(function()
+		return game:HttpGet(base .. path)
+	end)
+
+	if not success then
+		warn("Erro ao baixar:", path)
+		return nil
+	end
+
+	local func = loadstring(code)
+	if not func then
+		warn("Erro ao compilar:", path)
+		return nil
+	end
+
+	local ok, module = pcall(func)
+	if not ok then
+		warn("Erro ao executar:", path, module)
+		return nil
+	end
+
+	return module
 end
 
 local UI = loadModule("modules/ui/ui.lua")
 local Movement = loadModule("modules/movement/movement.lua")
+
+if not UI then
+	warn("UI não carregou")
+	return
+end
+
+if not Movement then
+	warn("Movement não carregou")
+	return
+end
 
 UI:Init()
 
