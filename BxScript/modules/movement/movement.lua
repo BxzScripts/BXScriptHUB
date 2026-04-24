@@ -17,11 +17,13 @@ function Movement:Fly(state)
 	if not char then return end
 	
 	local hrp = char:FindFirstChild("HumanoidRootPart")
+	if not hrp then return end
 	
 	if state then
-		local bv = Instance.new("BodyVelocity", hrp)
+		local bv = Instance.new("BodyVelocity")
 		bv.Name = "FlyVel"
 		bv.MaxForce = Vector3.new(1,1,1)*999999
+		bv.Parent = hrp
 	else
 		local old = hrp:FindFirstChild("FlyVel")
 		if old then old:Destroy() end
