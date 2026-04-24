@@ -1,3 +1,4 @@
+print("MAIN FUNCIONOU")
 local base = "https://raw.githubusercontent.com/BxzScripts/BXScriptHUB/main/BxScript/main.lua"
 
 local function loadModule(path)
