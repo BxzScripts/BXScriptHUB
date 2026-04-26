@@ -5,38 +5,24 @@ local function loadModule(path)
 		return game:HttpGet(base .. path)
 	end)
 
-	if not success then
-		warn("Erro ao baixar:", path)
-		return nil
-	end
+	if not success then return nil end
 
 	local func = loadstring(code)
-	if not func then
-		warn("Erro ao compilar:", path)
-		return nil
-	end
+	if not func then return nil end
 
 	local ok, module = pcall(func)
-	if not ok then
-		warn("Erro ao executar:", path, module)
-		return nil
-	end
+	if not ok then return nil end
 
 	return module
 end
 
 local UI = loadModule("modules/ui/ui.lua")
 local Movement = loadModule("modules/movement/movement.lua")
+local Aim = loadModule("modules/visual/aim.lua")
 
-if not UI then
-	warn("UI não carregou")
-	return
-end
-
-if not Movement then
-	warn("Movement não carregou")
-	return
-end
+if not UI then return end
+if not Movement then return end
+if not Aim then return end
 
 UI:Init()
 
@@ -50,4 +36,12 @@ end)
 
 UI:AddSlider("Jump", 50, 200, function(v)
 	Movement:SetJump(v)
+end)
+
+UI:AddToggle("Aim", function(v)
+	if v then
+		Aim:Start(loadModule)
+	else
+		Aim:Stop()
+	end
 end)
