@@ -4,7 +4,6 @@ local function loadModule(path)
 	local success, code = pcall(function()
 		return game:HttpGet(base .. path)
 	end)
-
 	if not success then return nil end
 
 	local func = loadstring(code)
