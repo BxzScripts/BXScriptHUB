@@ -17,10 +17,8 @@ function TargetDetector:GetClosestPlayer(radius)
 	for _, plr in pairs(Players:GetPlayers()) do
 		if plr ~= Players.LocalPlayer and plr.Character and plr.Character:FindFirstChild("Head") then
 			local pos, visible = Camera:WorldToViewportPoint(plr.Character.Head.Position)
-
 			if visible then
 				local dist = (Vector2.new(pos.X, pos.Y) - Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y/2)).Magnitude
-
 				if dist < shortest then
 					shortest = dist
 					closest = plr
@@ -35,8 +33,12 @@ end
 function TargetDetector:Update(radius)
 	local target = self:GetClosestPlayer(radius)
 
-	if target then
-		self.UI:UpdateTarget(target)
+	if target and target.Character and target.Character:FindFirstChild("Head") then
+		local pos, visible = workspace.CurrentCamera:WorldToViewportPoint(target.Character.Head.Position)
+		if visible then
+			self.UI.Crosshair.Position = UDim2.new(0, pos.X - 15, 0, pos.Y - 15)
+			self.UI:UpdateTarget(target)
+		end
 	else
 		self.UI:ClearTarget()
 	end
